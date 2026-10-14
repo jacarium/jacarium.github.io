@@ -1,0 +1,37 @@
+/* Jacarium brand tokens (from the "Jacarium Logo" canvas). */
+:root {
+  --font: 'Sora', system-ui, sans-serif;
+
+  /* Grounds */
+  --bg: #0F0D16;
+  --bg-section: #15121F;
+  --bg-card: #17141F;
+  --bg-card-hover: #1B1727;
+  --bg-raised: #221D30;
+  --bg-raised-hover: #2C2540;
+
+  /* Lines */
+  --line: #2A2438;
+  --line-strong: #3A3350;
+
+  /* Violets */
+  --accent: #7B5CE0;
+  --violet-400: #8E6CF0;
+  --violet-300: #9B7DF2;
+  --violet-200: #B39DF5;
+  --violet-100: #C9B8FA;
+  --lilac: #EDE6FF;
+
+  /* Text */
+  --text: #F3EFFF;
+  --text-muted: #B9AFD6;
+  --text-faint: #8F86A8;
+
+  /* Light block */
+  --light-block: #F6F2FF;
+  --on-light: #15121F;
+  --on-light-muted: #5B4E7A;
+
+  --radius-pill: 999px;
+  --max-width: 1240px;
+}
