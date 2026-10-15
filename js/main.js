@@ -126,55 +126,6 @@ function initAccordion(root) {
   });
 }
 
-// ---------- Screenshot gallery: click to enlarge ----------
-
-function initGallery(root) {
-  const dialog = document.querySelector('[data-lightbox]');
-  if (!dialog || typeof dialog.showModal !== 'function') return;
-  const img = dialog.querySelector('.lightbox-img');
-  const caption = dialog.querySelector('.lightbox-caption');
-  const count = dialog.querySelector('.lightbox-count');
-  const shots = [...root.querySelectorAll('.shot-open')];
-  let cur = 0;
-
-  function show(i) {
-    cur = (i + shots.length) % shots.length;
-    const thumb = shots[cur].querySelector('img');
-    img.src = thumb.currentSrc || thumb.src;
-    img.alt = thumb.alt;
-    caption.textContent = shots[cur].closest('figure').querySelector('figcaption')?.textContent ?? '';
-    count.textContent = `${cur + 1} / ${shots.length}`;
-  }
-
-  shots.forEach((btn, i) => btn.addEventListener('click', () => { show(i); dialog.showModal(); }));
-  dialog.querySelector('.lightbox-prev').addEventListener('click', () => show(cur - 1));
-  dialog.querySelector('.lightbox-next').addEventListener('click', () => show(cur + 1));
-  dialog.querySelector('.lightbox-close').addEventListener('click', () => dialog.close());
-
-  // Arrow keys while it's open; Esc is handled by <dialog>.
-  dialog.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') { e.preventDefault(); show(cur - 1); }
-    if (e.key === 'ArrowRight') { e.preventDefault(); show(cur + 1); }
-  });
-
-  // Swipe left or right on touch screens.
-  let startX = null;
-  const stage = dialog.querySelector('.lightbox-stage');
-  stage.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') startX = e.clientX; });
-  stage.addEventListener('pointerup', (e) => {
-    if (startX === null) return;
-    const dx = e.clientX - startX;
-    startX = null;
-    if (Math.abs(dx) > 50) show(cur + (dx < 0 ? 1 : -1));
-  });
-
-  // Clicking the dimmed backdrop closes it.
-  dialog.addEventListener('click', (e) => {
-    const r = dialog.getBoundingClientRect();
-    if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) dialog.close();
-  });
-}
-
 // ---------- Scroll reveal; the security lock shakes once on entry ----------
 
 function initReveal() {
@@ -198,5 +149,4 @@ function initReveal() {
 document.querySelectorAll('[data-device-stack]').forEach(initDeviceStack);
 document.querySelectorAll('[data-carousel]:not([data-device])').forEach(initCarousel);
 document.querySelectorAll('[data-accordion]').forEach(initAccordion);
-document.querySelectorAll('[data-gallery]').forEach(initGallery);
 initReveal();
