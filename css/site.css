@@ -250,7 +250,12 @@ pre.code code { padding: 0; background: none; color: var(--text); overflow-wrap:
 .faq-item summary { display: flex; align-items: center; gap: 16px; padding: 22px 24px; list-style: none; cursor: pointer; font-size: 18px; font-weight: 600; line-height: 1.4; border-radius: 20px; }
 .faq-item summary::-webkit-details-marker { display: none; }
 .faq-item summary:focus-visible { outline: 3px solid var(--violet-200); outline-offset: 2px; }
-.faq-chev { flex: none; margin-left: auto; color: var(--lilac); transition: transform 0.2s ease; }
+.faq-link { position: relative; flex: none; margin-left: auto; width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; color: var(--text-faint); transition: color 0.2s ease, background 0.2s ease; }
+.faq-link:hover, .faq-link:focus-visible { color: var(--lilac); background: var(--bg-raised); }
+.faq-link:focus-visible { outline: 3px solid var(--violet-200); outline-offset: 2px; }
+.faq-link-tip { position: absolute; bottom: calc(100% + 6px); right: 50%; transform: translateX(50%); padding: 4px 10px; border-radius: 8px; background: var(--bg-raised); box-shadow: inset 0 0 0 1px var(--line-strong); color: var(--lilac); font-size: 12px; font-weight: 600; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+.faq-link.is-copied .faq-link-tip { opacity: 1; }
+.faq-chev { flex: none; color: var(--lilac); transition: transform 0.2s ease; }
 .faq-item[open] .faq-chev { transform: rotate(180deg); }
 .faq-body { padding: 0 24px 24px; font-size: 16px; line-height: 1.6; color: var(--text-muted); min-width: 0; }
 .faq-body p { margin: 0 0 14px; }

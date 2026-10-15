@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css?v=20261015d">
-<link rel="stylesheet" href="css/site.css?v=20261015d">
+<link rel="stylesheet" href="css/tokens.css?v=20261015f">
+<link rel="stylesheet" href="css/site.css?v=20261015f">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -83,6 +83,46 @@ podman run -d --name jacarium --hostname jacarium --restart unless-stopped -p 19
   };
   openFromHash();
   addEventListener('hashchange', openFromHash);
+
+  // The Clipboard API only works on https:// and localhost, so fall back to the older copy command elsewhere.
+  async function copyText(text) {
+    try {
+      await navigator.clipboard.writeText(text);
+      return true;
+    } catch {
+      const area = document.createElement('textarea');
+      area.value = text;
+      area.setAttribute('readonly', '');
+      area.style.position = 'fixed';
+      area.style.opacity = '0';
+      document.body.appendChild(area);
+      area.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch {}
+      area.remove();
+      return ok;
+    }
+  }
+
+  // Each question gets a link button that copies a direct link to it.
+  const LINK_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.7 1.7"></path><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7l1.7-1.7"></path></svg>';
+  document.querySelectorAll('.faq-item[id]').forEach((item) => {
+    const link = document.createElement('a');
+    link.className = 'faq-link';
+    link.href = `#${item.id}`;
+    link.setAttribute('aria-label', 'Copy link to this question');
+    link.innerHTML = `${LINK_ICON}<span class="faq-link-tip" aria-live="polite"></span>`;
+    item.querySelector('.faq-chev').before(link);
+    link.addEventListener('click', async (e) => {
+      e.preventDefault(); // don't toggle the question
+      const url = `${location.origin}${location.pathname}#${item.id}`;
+      history.replaceState(null, '', `#${item.id}`);
+      const tip = link.querySelector('.faq-link-tip');
+      tip.textContent = (await copyText(url)) ? 'Link copied' : 'Link is in the address bar';
+      link.classList.add('is-copied');
+      setTimeout(() => link.classList.remove('is-copied'), 1600);
+    });
+  });
 
   // Search: hide questions that don't contain every word typed, and open the ones that do.
   const q = document.getElementById('faq-q');
