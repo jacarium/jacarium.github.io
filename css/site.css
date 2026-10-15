@@ -160,12 +160,26 @@ img { max-width: 100%; }
 
 /* ---------- Get started ---------- */
 .paths { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-.path { padding: 32px; border-radius: 24px; background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
+.path { min-width: 0; padding: 32px; border-radius: 24px; background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--line); display: flex; flex-direction: column; align-items: flex-start; gap: 20px; }
 .path-title { margin: 0; font-size: 22px; font-weight: 600; }
-.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; display: flex; flex-direction: column; gap: 12px; flex-grow: 1; }
+.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; display: flex; flex-direction: column; gap: 12px; }
 .steps li { counter-increment: step; display: flex; gap: 14px; align-items: baseline; font-size: 16px; line-height: 1.5; color: var(--text-muted); }
 .steps li::before { content: '0' counter(step); font-size: 13px; font-weight: 600; color: var(--violet-200); min-width: 24px; }
 .platforms { margin: 24px 0 0; font-size: 15px; color: var(--text-faint); }
+.platforms a { margin-left: 8px; }
+.trust { margin: 8px 0 0; font-size: 13px; line-height: 1.6; color: var(--text-faint); max-width: 720px; }
+.path-detail { width: 100%; padding-top: 20px; border-top: 1px solid var(--line); font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+.path-detail h4 { margin: 0 0 8px; font-size: 14px; font-weight: 600; color: var(--text); }
+.path-detail p { margin: 0 0 12px; }
+.path-detail p:last-child { margin-bottom: 0; }
+.path-detail strong { color: var(--text); font-weight: 600; }
+.files { margin: 0 0 16px; }
+.files dt { margin-top: 10px; color: var(--text); }
+.files dt:first-child { margin-top: 0; }
+.files dd { margin: 2px 0 0; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; padding: 1px 5px; border-radius: 6px; background: var(--bg-raised); color: var(--lilac); overflow-wrap: anywhere; }
+pre.code { max-width: 100%; margin: 0 0 12px; padding: 14px 16px; border-radius: 12px; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); overflow-x: auto; font-size: 13px; line-height: 1.6; }
+pre.code code { padding: 0; background: none; color: var(--text); overflow-wrap: normal; white-space: pre; font-size: inherit; }
 
 /* ---------- Open source ---------- */
 .open-source { padding: 112px 24px; position: relative; z-index: 2; }
@@ -197,3 +211,7 @@ img { max-width: 100%; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* ---------- Release update additions ---------- */
+.stack-note { margin: 20px 0 0; font-size: 13px; line-height: 1.5; color: var(--text-faint); text-align: center; position: relative; z-index: 5; }
+.sec-report { margin: 20px 0 0; font-size: 15px; color: var(--text-muted); }

@@ -130,6 +130,7 @@
         <button type="button" class="device-switch" aria-label="Bring phone screenshots to the front"></button>
       </figure>
       </div>
+      <p class="stack-note">On a phone, Jacarium runs in your browser; it isn't optimised for mobile yet.</p>
     </div>
 
     <div class="hero-tree">
@@ -183,6 +184,7 @@
           </button>
         </li>
       </ul>
+      <p class="sec-report"><a href="https://github.com/jacarium/jacarium/security/policy" target="_blank" rel="noopener">Report a vulnerability</a> through private reporting on GitHub.</p>
     </div>
   </div>
 </section>
@@ -196,9 +198,7 @@
     </div>
     <div class="os-detail">
       <p>You're free to use it, study how it works, change it and share it. If you distribute a modified version, or run one as a service for other people, you share your changes under the same licence. That way Jacarium, and every improvement to it, stays open for everyone.</p>
-      <!-- Hidden until the repo is public:
-      <p>The full source code is on GitHub: <a href="https://github.com/jacarium/jacarium" target="_blank" rel="noopener">github.com/jacarium/jacarium</a></p>
-      -->
+      <p>The full source code is on GitHub: <a href="https://github.com/jacarium/jacarium" target="_blank" rel="noopener">github.com/jacarium/jacarium</a> · <a href="https://github.com/jacarium/jacarium/issues" target="_blank" rel="noopener">Report an issue</a></p>
       <div class="os-support">
         <div class="tips">
           <span class="tips-label">Leave a tip</span>
@@ -225,19 +225,44 @@
           <li>Run it.</li>
           <li>Write your first note.</li>
         </ol>
-        <span class="btn btn-soon">Coming Soon</span>
+        <a href="https://github.com/jacarium/jacarium/releases/latest" class="btn btn-primary" target="_blank" rel="noopener">Download</a>
+        <div class="path-detail">
+          <h4>Which file to pick</h4>
+          <dl class="files">
+            <dt>macOS, Apple silicon (M1 and later)</dt>
+            <dd><code>Jacarium-&lt;version&gt;-arm64.dmg</code></dd>
+            <dt>Linux, x64</dt>
+            <dd><code>Jacarium-&lt;version&gt;.AppImage</code>, <code>jacarium_&lt;version&gt;_amd64.deb</code> or <code>jacarium-&lt;version&gt;.x86_64.rpm</code></dd>
+            <dt>Linux, ARM64</dt>
+            <dd><code>Jacarium-&lt;version&gt;-arm64.AppImage</code>, <code>jacarium_&lt;version&gt;_arm64.deb</code> or <code>jacarium-&lt;version&gt;.aarch64.rpm</code></dd>
+          </dl>
+          <p><strong>macOS:</strong> The app isn't signed by Apple yet. The first time, open System Settings &gt; Privacy &amp; Security and click Open Anyway next to Jacarium.</p>
+          <p><strong>Linux:</strong> Make the AppImage executable (<code>chmod +x</code>) and run it, or install the package: <code>sudo apt install ./jacarium_*.deb</code> (Debian, Ubuntu) or <code>sudo dnf install ./jacarium-*.rpm</code> (Fedora, RHEL). Needs a recent distribution: Ubuntu 24.04, Debian 13, Fedora 40, RHEL 10 or newer.</p>
+        </div>
       </div>
       <div class="path">
         <h3 class="path-title">Self-hosted</h3>
         <ol class="steps">
-          <li>Deploy the container on your server, such as a Raspberry Pi.</li>
+          <li>Run the container on your server, such as a Raspberry Pi.</li>
           <li>Open it in your web browser.</li>
           <li>Write your first note.</li>
         </ol>
-        <span class="btn btn-soon">Coming Soon</span>
+        <a href="https://quay.io/repository/zerodayz/jacarium" class="btn btn-primary" target="_blank" rel="noopener">Container image</a>
+        <div class="path-detail">
+          <p>Image: <a href="https://quay.io/repository/zerodayz/jacarium" target="_blank" rel="noopener"><code>quay.io/zerodayz/jacarium</code></a> (amd64 and arm64, e.g. a Raspberry Pi 4/5 with a 64-bit OS).</p>
+          <h4>Quick start</h4>
+<pre class="code"><code>mkdir -p ~/.config/jacarium/server/data
+podman run -d --name jacarium --hostname jacarium --restart unless-stopped \
+  -p 127.0.0.1:8443:8443 -v ~/.config/jacarium/server/data:/data:Z,U \
+  quay.io/zerodayz/jacarium:latest
+podman logs jacarium   # the one-time setup code for the first account</code></pre>
+          <p>Then open <code>https://localhost:8443</code> and create the first account with the setup code. The certificate is self-signed, so your browser warns once.</p>
+          <p><a href="https://github.com/jacarium/jacarium/blob/main/docs/SELF_HOSTING.md" target="_blank" rel="noopener">Docker, sharing on your network, updates and backups</a></p>
+        </div>
       </div>
     </div>
-    <p class="platforms">Available for web and desktop.</p>
+    <p class="platforms">Available for web and desktop. <a href="https://github.com/jacarium/jacarium/blob/main/CHANGELOG.md" target="_blank" rel="noopener">What's new</a></p>
+    <p class="trust">Every release lists SHA-256 checksums and GitHub build provenance for the apps and the container image, so you can verify what you download.</p>
   </div>
 </section>
 
@@ -298,7 +323,7 @@
 
 <footer class="site-footer">
   <span>Jacarium</span>
-  <span>Free and open source under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL-3.0 licence</a><!-- Hidden until the repo is public: · <a href="https://github.com/jacarium/jacarium" target="_blank" rel="noopener">Source code on GitHub</a> --></span>
+  <span>Free and open source under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL-3.0 licence</a> · <a href="https://github.com/jacarium/jacarium" target="_blank" rel="noopener">Source code on GitHub</a></span>
   <span>Provided as is.</span>
 </footer>
 
