@@ -8,11 +8,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css?v=20261015">
-<link rel="stylesheet" href="css/site.css?v=20261015">
+<link rel="stylesheet" href="css/tokens.css?v=20261015d">
+<link rel="stylesheet" href="css/site.css?v=20261015d">
 <script>document.documentElement.classList.add('js');</script>
-<script type="module" src="js/jacaranda-tree.js?v=20261015"></script>
-<script type="module" src="js/main.js?v=20261015"></script>
+<script type="module" src="js/jacaranda-tree.js?v=20261015d"></script>
+<script type="module" src="js/main.js?v=20261015d"></script>
 </head>
 <body>
 <div class="page">
@@ -35,6 +35,7 @@
   <nav aria-label="Main" class="site-nav">
     <a href="#security" class="nav-link">Security</a>
     <a href="#privacy" class="nav-link">Privacy</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
     <a href="#get-started" class="btn btn-primary btn-sm">Get started</a>
   </nav>
 </header>
@@ -247,12 +248,14 @@
           <p>Image: <a href="https://quay.io/repository/zerodayz/jacarium" target="_blank" rel="noopener"><code>quay.io/zerodayz/jacarium</code></a> (amd64 and arm64, e.g. a Raspberry Pi 4/5 with a 64-bit OS).</p>
           <h4>Quick start</h4>
 <pre class="code"><code>mkdir -p ~/.config/jacarium/server/data
-podman run -d --name jacarium --hostname jacarium --restart unless-stopped \
-  -p 127.0.0.1:8443:8443 -v ~/.config/jacarium/server/data:/data:Z,U \
-  quay.io/zerodayz/jacarium:latest
-podman logs jacarium   # the one-time setup code for the first account</code></pre>
+
+podman run -d --name jacarium --hostname jacarium --restart unless-stopped -p 127.0.0.1:8443:8443 -v ~/.config/jacarium/server/data:/data:Z,U quay.io/zerodayz/jacarium:latest
+
+# the one-time setup code for the first account
+podman logs jacarium</code></pre>
           <p>Then open <code>https://localhost:8443</code> and create the first account with the setup code. The certificate is self-signed, so your browser warns once.</p>
           <p><a href="https://github.com/jacarium/jacarium/blob/main/docs/SELF_HOSTING.md" target="_blank" rel="noopener">Docker, sharing on your network, updates and backups</a></p>
+          <p>Can't reach it by IP address? See the <a href="faq.html#reach-from-network">FAQ</a>.</p>
         </div>
       </div>
     </div>
