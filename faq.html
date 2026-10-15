@@ -52,13 +52,39 @@
     <p class="faq-empty" id="faq-empty" hidden>No questions match. <a href="https://github.com/jacarium/jacarium/issues" target="_blank" rel="noopener">Report an issue</a> on GitHub.</p>
 
     <div class="faq-list">
+      <details class="faq-item" id="backup-desktop">
+        <summary>
+          <span>How to take a backup? (Desktop)</span>
+          <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+        </summary>
+        <div class="faq-body">
+          <p>Export your database from <strong>Application Settings › Database › Export Database</strong>.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" id="backup-self-hosted">
+        <summary>
+          <span>How to take a backup? (Self-Hosted)</span>
+          <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+        </summary>
+        <div class="faq-body">
+          <p>Everything is in the data folder, <code>~/.config/jacarium/server/data</code>. Stop the container, archive the folder and start it again:</p>
+<pre class="code"><code>podman stop jacarium
+
+podman run --rm --volumes-from jacarium --entrypoint tar quay.io/zerodayz/jacarium:latest czf - -C / data &gt; ~/jacarium-backup-$(date +%F).tar.gz
+
+podman start jacarium</code></pre>
+          <p>The backup is saved in your home folder, for example <code>~/jacarium-backup-2026-10-16.tar.gz</code>. With Docker, use <code>docker</code> instead of <code>podman</code>.</p>
+        </div>
+      </details>
+
       <details class="faq-item" id="update-desktop">
         <summary>
           <span>How to update to the latest version? (Desktop)</span>
           <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
         </summary>
         <div class="faq-body">
-          <p>Before you update, export your database, just in case: <strong>Application Settings › Database › Export Database</strong>.</p>
+          <p>Before you update, <a href="#backup-desktop">take a backup</a>, just in case.</p>
           <p>Quit Jacarium and download the new version from <a href="https://github.com/jacarium/jacarium/releases/latest" target="_blank" rel="noopener">the latest release</a>, then:</p>
           <ul>
             <li><strong>macOS:</strong> open the <code>.dmg</code>, drag Jacarium to Applications and choose Replace.</li>
@@ -76,7 +102,7 @@
           <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
         </summary>
         <div class="faq-body">
-          <p>Before you update, export your database, just in case: <strong>Application Settings › Database › Export Database</strong>.</p>
+          <p>Before you update, <a href="#backup-self-hosted">take a backup</a>, just in case.</p>
           <p>Pull the new image and recreate the container with the same command as the first time. Your data stays in <code>~/.config/jacarium/server/data</code>.</p>
 <pre class="code"><code>podman pull quay.io/zerodayz/jacarium:latest
 
@@ -120,6 +146,13 @@ podman run -d --name jacarium --hostname jacarium --restart unless-stopped -p 19
   };
   openFromHash();
   addEventListener('hashchange', openFromHash);
+  // A link inside an answer opens the question it points to, even when the address already ends with it.
+  document.querySelectorAll('.faq-body a[href^="#"]').forEach((a) => {
+    a.addEventListener('click', () => {
+      const el = document.getElementById(a.getAttribute('href').slice(1));
+      if (el && el.tagName === 'DETAILS') el.open = true;
+    });
+  });
 
   // The Clipboard API only works on https:// and localhost, so fall back to the older copy command elsewhere.
   async function copyText(text) {
