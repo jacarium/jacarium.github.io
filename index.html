@@ -225,7 +225,30 @@
           <li>Run it.</li>
           <li>Write your first note.</li>
         </ol>
-        <a href="https://github.com/jacarium/jacarium/releases/latest" class="btn btn-primary" target="_blank" rel="noopener">Download</a>
+        <div class="download" data-download>
+          <label class="sr-only" for="dl-platform">Your system</label>
+          <span class="select-wrap">
+            <select id="dl-platform">
+              <optgroup label="macOS">
+                <option value="mac-arm64">macOS, Apple silicon (.dmg)</option>
+              </optgroup>
+              <optgroup label="Linux, x64">
+                <option value="linux-x64-appimage">Linux x64, AppImage</option>
+                <option value="linux-x64-deb">Linux x64, .deb (Debian, Ubuntu)</option>
+                <option value="linux-x64-rpm">Linux x64, .rpm (Fedora, RHEL)</option>
+              </optgroup>
+              <optgroup label="Linux, ARM64">
+                <option value="linux-arm64-appimage">Linux ARM64, AppImage</option>
+                <option value="linux-arm64-deb">Linux ARM64, .deb (Debian, Ubuntu)</option>
+                <option value="linux-arm64-rpm">Linux ARM64, .rpm (Fedora, RHEL)</option>
+              </optgroup>
+            </select>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+          <!-- Falls back to the Releases page when the latest release or the file can't be found. -->
+          <a href="https://github.com/jacarium/jacarium/releases/latest" class="btn btn-primary" data-download-link target="_blank" rel="noopener">Download</a>
+          <p class="dl-meta" data-download-meta aria-live="polite"></p>
+        </div>
         <div class="path-detail">
           <h4>Which file to pick</h4>
           <dl class="files">

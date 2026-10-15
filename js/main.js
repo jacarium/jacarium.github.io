@@ -126,6 +126,78 @@ function initAccordion(root) {
   });
 }
 
+// ---------- Desktop download: pick a system, get that file from the latest release ----------
+
+const RELEASES_API = 'https://api.github.com/repos/jacarium/jacarium/releases/latest';
+
+// Release file names contain the version, so each option matches by its ending.
+const ASSET_PATTERNS = {
+  'mac-arm64': /-arm64\.dmg$/,
+  'linux-x64-appimage': /^(?!.*arm64).*\.AppImage$/,
+  'linux-x64-deb': /_amd64\.deb$/,
+  'linux-x64-rpm': /\.x86_64\.rpm$/,
+  'linux-arm64-appimage': /-arm64\.AppImage$/,
+  'linux-arm64-deb': /_arm64\.deb$/,
+  'linux-arm64-rpm': /\.aarch64\.rpm$/
+};
+
+// A best guess only: browsers can't reliably tell an Intel Mac from Apple silicon, or ARM Linux from x64.
+function guessPlatform() {
+  const ua = navigator.userAgent;
+  const platform = navigator.userAgentData?.platform || navigator.platform || '';
+  if (/Mac/i.test(platform) && !/iPhone|iPad/i.test(ua)) return 'mac-arm64';
+  if (/Linux/i.test(platform) && !/Android/i.test(ua)) {
+    const arch = /aarch64|arm64/i.test(platform + ua) ? 'arm64' : 'x64';
+    const pkg = /Ubuntu|Debian/i.test(ua) ? 'deb' : /Fedora|Red Hat/i.test(ua) ? 'rpm' : 'appimage';
+    return `linux-${arch}-${pkg}`;
+  }
+  return null;
+}
+
+// Cached for the session so moving around the page doesn't use up GitHub's rate limit.
+async function latestRelease() {
+  try {
+    const cached = JSON.parse(sessionStorage.getItem('jacarium-release') || 'null');
+    if (cached && Date.now() - cached.at < 3600e3) return cached.release;
+  } catch {}
+  const res = await fetch(RELEASES_API, { headers: { Accept: 'application/vnd.github+json' } });
+  if (!res.ok) throw new Error(`GitHub API ${res.status}`);
+  const data = await res.json();
+  const release = { tag: data.tag_name, assets: data.assets.map((a) => ({ name: a.name, url: a.browser_download_url, size: a.size })) };
+  try { sessionStorage.setItem('jacarium-release', JSON.stringify({ at: Date.now(), release })); } catch {}
+  return release;
+}
+
+function initDownload(root) {
+  const select = root.querySelector('select');
+  const link = root.querySelector('[data-download-link]');
+  const meta = root.querySelector('[data-download-meta]');
+  const fallback = link.href;
+  let release = null;
+
+  const guess = guessPlatform();
+  if (guess) select.value = guess;
+
+  function update() {
+    const asset = release?.assets.find((a) => ASSET_PATTERNS[select.value]?.test(a.name));
+    if (asset) {
+      // GitHub serves release files as attachments, so the browser saves it and stays on this page.
+      link.href = asset.url;
+      link.removeAttribute('target');
+      link.setAttribute('aria-label', `Download ${asset.name}`);
+      meta.textContent = `${release.tag} · ${asset.name} · ${Math.round(asset.size / 1048576)} MB`;
+    } else {
+      link.href = fallback;
+      link.target = '_blank';
+      link.removeAttribute('aria-label');
+      meta.textContent = '';
+    }
+  }
+
+  select.addEventListener('change', update);
+  latestRelease().then((r) => { release = r; update(); }).catch(() => {});
+}
+
 // ---------- Scroll reveal; the security lock shakes once on entry ----------
 
 function initReveal() {
@@ -149,4 +221,5 @@ function initReveal() {
 document.querySelectorAll('[data-device-stack]').forEach(initDeviceStack);
 document.querySelectorAll('[data-carousel]:not([data-device])').forEach(initCarousel);
 document.querySelectorAll('[data-accordion]').forEach(initAccordion);
+document.querySelectorAll('[data-download]').forEach(initDownload);
 initReveal();
