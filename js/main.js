@@ -130,16 +130,21 @@ function initAccordion(root) {
 
 const RELEASES_API = 'https://api.github.com/repos/jacarium/jacarium/releases/latest';
 
-// Release file names contain the version, so each option matches by its ending.
-const ASSET_PATTERNS = {
-  'mac-arm64': /-arm64\.dmg$/,
-  'linux-x64-appimage': /^(?!.*arm64).*\.AppImage$/,
-  'linux-x64-deb': /_amd64\.deb$/,
-  'linux-x64-rpm': /\.x86_64\.rpm$/,
-  'linux-arm64-appimage': /-arm64\.AppImage$/,
-  'linux-arm64-deb': /_arm64\.deb$/,
-  'linux-arm64-rpm': /\.aarch64\.rpm$/
-};
+// Release file names contain the version, so each option matches its file by the ending.
+const MAC_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="2"></rect><path d="M2 19h20"></path></svg>';
+const LINUX_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"></rect><path d="M7 9l3 3-3 3M12 15h5"></path></svg>';
+const CHECK_ICON = '<svg class="picker-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>';
+const CHEVRON_ICON = '<svg class="picker-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>';
+
+const PLATFORMS = [
+  { value: 'mac-arm64', group: 'macOS', name: 'Apple silicon', hint: '.dmg · M1 and later', note: 'mac', icon: MAC_ICON, pattern: /-arm64\.dmg$/ },
+  { value: 'linux-x64-appimage', group: 'Linux x64', name: 'AppImage', hint: 'Any distribution', note: 'linux', icon: LINUX_ICON, pattern: /^(?!.*arm64).*\.AppImage$/ },
+  { value: 'linux-x64-deb', group: 'Linux x64', name: '.deb', hint: 'Debian, Ubuntu', note: 'linux', icon: LINUX_ICON, pattern: /_amd64\.deb$/ },
+  { value: 'linux-x64-rpm', group: 'Linux x64', name: '.rpm', hint: 'Fedora, RHEL', note: 'linux', icon: LINUX_ICON, pattern: /\.x86_64\.rpm$/ },
+  { value: 'linux-arm64-appimage', group: 'Linux ARM64', name: 'AppImage', hint: 'Any distribution', note: 'linux', icon: LINUX_ICON, pattern: /-arm64\.AppImage$/ },
+  { value: 'linux-arm64-deb', group: 'Linux ARM64', name: '.deb', hint: 'Debian, Ubuntu', note: 'linux', icon: LINUX_ICON, pattern: /_arm64\.deb$/ },
+  { value: 'linux-arm64-rpm', group: 'Linux ARM64', name: '.rpm', hint: 'Fedora, RHEL', note: 'linux', icon: LINUX_ICON, pattern: /\.aarch64\.rpm$/ }
+];
 
 // A best guess only: browsers can't reliably tell an Intel Mac from Apple silicon, or ARM Linux from x64.
 function guessPlatform() {
@@ -168,18 +173,104 @@ async function latestRelease() {
   return release;
 }
 
+// A button and listbox instead of a native <select>, whose option list can't be styled on macOS.
+function buildPicker(root, onChange) {
+  const picker = document.createElement('div');
+  picker.className = 'picker';
+  picker.innerHTML = `
+    <button type="button" class="picker-btn" aria-haspopup="listbox" aria-expanded="false">
+      <span class="picker-icon"></span>
+      <span class="picker-text"><span class="picker-title"></span><span class="picker-sub"></span></span>
+      ${CHEVRON_ICON}
+    </button>
+    <ul class="picker-list" role="listbox" tabindex="-1" aria-label="Your system" hidden></ul>`;
+  const btn = picker.querySelector('.picker-btn');
+  const list = picker.querySelector('.picker-list');
+
+  let lastGroup = '';
+  const opts = PLATFORMS.map((p, i) => {
+    if (p.group !== lastGroup) {
+      lastGroup = p.group;
+      const g = document.createElement('li');
+      g.className = 'picker-group';
+      g.setAttribute('role', 'presentation');
+      g.textContent = p.group;
+      list.appendChild(g);
+    }
+    const li = document.createElement('li');
+    li.className = 'picker-opt';
+    li.id = `dl-opt-${i}`;
+    li.setAttribute('role', 'option');
+    li.innerHTML = `<span class="picker-opt-name"></span><span class="picker-opt-hint"></span>${CHECK_ICON}`;
+    li.querySelector('.picker-opt-name').textContent = p.name;
+    li.querySelector('.picker-opt-hint').textContent = p.hint;
+    li.addEventListener('click', () => { select(i); close(true); });
+    li.addEventListener('pointermove', () => setActive(i));
+    list.appendChild(li);
+    return li;
+  });
+
+  let cur = 0, active = 0;
+
+  function setActive(i) {
+    active = (i + opts.length) % opts.length;
+    opts.forEach((o, j) => o.classList.toggle('is-active', j === active));
+    list.setAttribute('aria-activedescendant', opts[active].id);
+    opts[active].scrollIntoView({ block: 'nearest' });
+  }
+
+  function select(i) {
+    cur = i;
+    const p = PLATFORMS[i];
+    opts.forEach((o, j) => o.setAttribute('aria-selected', String(j === i)));
+    btn.querySelector('.picker-icon').innerHTML = p.icon;
+    btn.querySelector('.picker-title').textContent = p.group;
+    btn.querySelector('.picker-sub').textContent = `${p.name} · ${p.hint}`;
+    btn.setAttribute('aria-label', `Your system: ${p.group}, ${p.name}, ${p.hint}`);
+    onChange(p);
+  }
+
+  function open() {
+    list.hidden = false;
+    btn.setAttribute('aria-expanded', 'true');
+    setActive(cur);
+    list.focus({ preventScroll: true });
+  }
+
+  function close(refocus) {
+    if (list.hidden) return;
+    list.hidden = true;
+    btn.setAttribute('aria-expanded', 'false');
+    if (refocus) btn.focus({ preventScroll: true });
+  }
+
+  btn.addEventListener('click', () => (list.hidden ? open() : close(false)));
+  btn.addEventListener('keydown', (e) => {
+    if (['ArrowDown', 'ArrowUp'].includes(e.key)) { e.preventDefault(); open(); }
+  });
+  list.addEventListener('keydown', (e) => {
+    const keys = { ArrowDown: active + 1, ArrowUp: active - 1, Home: 0, End: opts.length - 1 };
+    if (e.key in keys) { e.preventDefault(); setActive(keys[e.key]); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); select(active); close(true); }
+    else if (e.key === 'Escape') { e.preventDefault(); close(true); }
+    else if (e.key === 'Tab') close(false);
+  });
+  document.addEventListener('pointerdown', (e) => { if (!picker.contains(e.target)) close(false); });
+
+  root.prepend(picker);
+  return { select(value) { select(Math.max(0, PLATFORMS.findIndex((p) => p.value === value))); } };
+}
+
 function initDownload(root) {
-  const select = root.querySelector('select');
   const link = root.querySelector('[data-download-link]');
   const meta = root.querySelector('[data-download-meta]');
+  const notes = [...document.querySelectorAll('[data-note]')];
   const fallback = link.href;
-  let release = null;
-
-  const guess = guessPlatform();
-  if (guess) select.value = guess;
+  let release = null, platform = null;
 
   function update() {
-    const asset = release?.assets.find((a) => ASSET_PATTERNS[select.value]?.test(a.name));
+    notes.forEach((n) => { n.hidden = n.dataset.note !== platform.note; });
+    const asset = release?.assets.find((a) => platform.pattern.test(a.name));
     if (asset) {
       // GitHub serves release files as attachments, so the browser saves it and stays on this page.
       link.href = asset.url;
@@ -194,7 +285,8 @@ function initDownload(root) {
     }
   }
 
-  select.addEventListener('change', update);
+  const picker = buildPicker(root, (p) => { platform = p; update(); });
+  picker.select(guessPlatform() || 'mac-arm64');
   latestRelease().then((r) => { release = r; update(); }).catch(() => {});
 }
 

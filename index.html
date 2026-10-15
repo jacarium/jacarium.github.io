@@ -8,11 +8,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css">
-<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/tokens.css?v=20261015">
+<link rel="stylesheet" href="css/site.css?v=20261015">
 <script>document.documentElement.classList.add('js');</script>
-<script type="module" src="js/jacaranda-tree.js"></script>
-<script type="module" src="js/main.js"></script>
+<script type="module" src="js/jacaranda-tree.js?v=20261015"></script>
+<script type="module" src="js/main.js?v=20261015"></script>
 </head>
 <body>
 <div class="page">
@@ -226,41 +226,13 @@
           <li>Write your first note.</li>
         </ol>
         <div class="download" data-download>
-          <label class="sr-only" for="dl-platform">Your system</label>
-          <span class="select-wrap">
-            <select id="dl-platform">
-              <optgroup label="macOS">
-                <option value="mac-arm64">macOS, Apple silicon (.dmg)</option>
-              </optgroup>
-              <optgroup label="Linux, x64">
-                <option value="linux-x64-appimage">Linux x64, AppImage</option>
-                <option value="linux-x64-deb">Linux x64, .deb (Debian, Ubuntu)</option>
-                <option value="linux-x64-rpm">Linux x64, .rpm (Fedora, RHEL)</option>
-              </optgroup>
-              <optgroup label="Linux, ARM64">
-                <option value="linux-arm64-appimage">Linux ARM64, AppImage</option>
-                <option value="linux-arm64-deb">Linux ARM64, .deb (Debian, Ubuntu)</option>
-                <option value="linux-arm64-rpm">Linux ARM64, .rpm (Fedora, RHEL)</option>
-              </optgroup>
-            </select>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
-          </span>
-          <!-- Falls back to the Releases page when the latest release or the file can't be found. -->
+          <!-- main.js builds the system picker here. Without JavaScript, Download opens the Releases page. -->
           <a href="https://github.com/jacarium/jacarium/releases/latest" class="btn btn-primary" data-download-link target="_blank" rel="noopener">Download</a>
           <p class="dl-meta" data-download-meta aria-live="polite"></p>
         </div>
-        <div class="path-detail">
-          <h4>Which file to pick</h4>
-          <dl class="files">
-            <dt>macOS, Apple silicon (M1 and later)</dt>
-            <dd><code>Jacarium-&lt;version&gt;-arm64.dmg</code></dd>
-            <dt>Linux, x64</dt>
-            <dd><code>Jacarium-&lt;version&gt;.AppImage</code>, <code>jacarium_&lt;version&gt;_amd64.deb</code> or <code>jacarium-&lt;version&gt;.x86_64.rpm</code></dd>
-            <dt>Linux, ARM64</dt>
-            <dd><code>Jacarium-&lt;version&gt;-arm64.AppImage</code>, <code>jacarium_&lt;version&gt;_arm64.deb</code> or <code>jacarium-&lt;version&gt;.aarch64.rpm</code></dd>
-          </dl>
-          <p><strong>macOS:</strong> The app isn't signed by Apple yet. The first time, open System Settings &gt; Privacy &amp; Security and click Open Anyway next to Jacarium.</p>
-          <p><strong>Linux:</strong> Make the AppImage executable (<code>chmod +x</code>) and run it, or install the package: <code>sudo apt install ./jacarium_*.deb</code> (Debian, Ubuntu) or <code>sudo dnf install ./jacarium-*.rpm</code> (Fedora, RHEL). Needs a recent distribution: Ubuntu 24.04, Debian 13, Fedora 40, RHEL 10 or newer.</p>
+        <div class="dl-notes">
+          <p data-note="mac"><strong>macOS:</strong> The app isn't signed by Apple yet. The first time, open System Settings &gt; Privacy &amp; Security and click Open Anyway next to Jacarium.</p>
+          <p data-note="linux"><strong>Linux:</strong> Make the AppImage executable (<code>chmod +x</code>) and run it, or install the package: <code>sudo apt install ./jacarium_*.deb</code> (Debian, Ubuntu) or <code>sudo dnf install ./jacarium-*.rpm</code> (Fedora, RHEL). Needs a recent distribution: Ubuntu 24.04, Debian 13, Fedora 40, RHEL 10 or newer.</p>
         </div>
       </div>
       <div class="path">
