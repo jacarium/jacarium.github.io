@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css?v=20261015f">
-<link rel="stylesheet" href="css/site.css?v=20261015f">
+<link rel="stylesheet" href="css/tokens.css?v=20261015g">
+<link rel="stylesheet" href="css/site.css?v=20261015g">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -52,6 +52,43 @@
     <p class="faq-empty" id="faq-empty" hidden>No questions match. <a href="https://github.com/jacarium/jacarium/issues" target="_blank" rel="noopener">Report an issue</a> on GitHub.</p>
 
     <div class="faq-list">
+      <details class="faq-item" id="update-desktop">
+        <summary>
+          <span>How to update to the latest version? (Desktop)</span>
+          <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+        </summary>
+        <div class="faq-body">
+          <p>Before you update, export your database, just in case: <strong>Application Settings › Database › Export Database</strong>.</p>
+          <p>Quit Jacarium and download the new version from <a href="https://github.com/jacarium/jacarium/releases/latest" target="_blank" rel="noopener">the latest release</a>, then:</p>
+          <ul>
+            <li><strong>macOS:</strong> open the <code>.dmg</code>, drag Jacarium to Applications and choose Replace.</li>
+            <li><strong>AppImage:</strong> replace the old file with the new one, then <code>chmod +x Jacarium-*.AppImage</code>.</li>
+            <li><strong>.deb:</strong> <code>sudo apt install ./jacarium_&lt;version&gt;_amd64.deb</code> (or <code>_arm64</code>).</li>
+            <li><strong>.rpm:</strong> <code>sudo dnf install ./jacarium-&lt;version&gt;.x86_64.rpm</code> (or <code>.aarch64</code>).</li>
+          </ul>
+          <p>Your documents and settings stay where they are.</p>
+        </div>
+      </details>
+
+      <details class="faq-item" id="update-self-hosted">
+        <summary>
+          <span>How to update to the latest version? (Self-Hosted)</span>
+          <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
+        </summary>
+        <div class="faq-body">
+          <p>Before you update, export your database, just in case: <strong>Application Settings › Database › Export Database</strong>.</p>
+          <p>Pull the new image and recreate the container with the same command as the first time. Your data stays in <code>~/.config/jacarium/server/data</code>.</p>
+<pre class="code"><code>podman pull quay.io/zerodayz/jacarium:latest
+
+podman rm -f jacarium
+
+IP=$(hostname -I | awk '{print $1}')
+
+podman run -d --name jacarium --hostname jacarium --restart unless-stopped -p "$IP:8443:8443" -e TLS_SAN="IP:$IP" -v ~/.config/jacarium/server/data:/data:Z,U quay.io/zerodayz/jacarium:latest</code></pre>
+          <p><code>docker</code> works the same way. To stay on one version, use its tag instead of <code>:latest</code>. See <a href="https://github.com/jacarium/jacarium/blob/main/CHANGELOG.md" target="_blank" rel="noopener">what's new</a>.</p>
+        </div>
+      </details>
+
       <details class="faq-item" id="reach-from-network">
         <summary>
           <span>If I <code>curl -kL https://192.168.1.20:8443</code> it doesn't work</span>

@@ -261,6 +261,9 @@ pre.code code { padding: 0; background: none; color: var(--text); overflow-wrap:
 .faq-body p { margin: 0 0 14px; }
 .faq-body p:last-child { margin-bottom: 0; }
 .faq-body pre.code { margin-bottom: 14px; }
+.faq-body ul { margin: 0 0 14px; padding-left: 20px; }
+.faq-body li { margin-bottom: 6px; }
+.faq-body strong { color: var(--text); font-weight: 600; }
 .faq-item summary code { font-weight: 400; }
 .faq-search { position: relative; max-width: 880px; margin-bottom: 20px; color: var(--lilac); }
 .faq-search svg { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); pointer-events: none; }
