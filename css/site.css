@@ -244,6 +244,9 @@ pre.code code { padding: 0; background: none; color: var(--text); overflow-wrap:
 /* ---------- FAQ page ---------- */
 .faq-page { padding: 64px 24px 112px; }
 .faq-col { max-width: 880px; }
+.faq-group + .faq-group { margin-top: 40px; }
+.faq-group[hidden] { display: none; }
+.faq-group-title { margin: 0 0 14px; font-size: 20px; font-weight: 600; color: var(--text); }
 .faq-list { max-width: 880px; display: flex; flex-direction: column; gap: 12px; }
 .faq-item { border-radius: 20px; background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--line); }
 .faq-item[open] { box-shadow: inset 0 0 0 1px var(--line-strong); }

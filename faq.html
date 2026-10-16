@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css?v=20261015g">
-<link rel="stylesheet" href="css/site.css?v=20261015g">
+<link rel="stylesheet" href="css/tokens.css?v=20261016a">
+<link rel="stylesheet" href="css/site.css?v=20261016a">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -51,6 +51,8 @@
     </div>
     <p class="faq-empty" id="faq-empty" hidden>No questions match. <a href="https://github.com/jacarium/jacarium/issues" target="_blank" rel="noopener">Report an issue</a> on GitHub.</p>
 
+    <section class="faq-group" aria-labelledby="faq-g-updates">
+    <h2 class="faq-group-title" id="faq-g-updates">Backups and updates</h2>
     <div class="faq-list">
       <details class="faq-item" id="backup-desktop">
         <summary>
@@ -58,7 +60,7 @@
           <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
         </summary>
         <div class="faq-body">
-          <p>Export your database from <strong>Application Settings › Database › Export Database</strong>.</p>
+          <p>Export your database from <strong>Application Settings › General › Database › Export Database</strong>.</p>
         </div>
       </details>
 
@@ -115,13 +117,19 @@ podman run -d --name jacarium --hostname jacarium --restart unless-stopped -p "$
         </div>
       </details>
 
+    </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="faq-g-self-hosting">
+    <h2 class="faq-group-title" id="faq-g-self-hosting">Self-hosting</h2>
+    <div class="faq-list">
       <details class="faq-item" id="reach-from-network">
         <summary>
-          <span>If I <code>curl -kL https://192.168.1.20:8443</code> it doesn't work</span>
+          <span>Why can't I reach Jacarium by its IP address?</span>
           <svg class="faq-chev" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>
         </summary>
         <div class="faq-body">
-          <p>It works when I <code>curl -kL https://127.0.0.1:8443</code>.</p>
+          <p><code>curl -kL https://192.168.1.20:8443</code> doesn't work and is unreachable, but <code>curl -kL https://127.0.0.1:8443</code> does.</p>
           <p>The quick start listens only on <code>127.0.0.1</code> on purpose: the idea is to put <a href="https://caddyserver.com" target="_blank" rel="noopener">Caddy</a> in front of it as a reverse proxy.</p>
           <p>To reach Jacarium directly by IP instead, use the solution below.</p>
           <p>Solution, replacing <code>192.168.1.20</code> with your server's IP:</p>
@@ -133,6 +141,7 @@ podman run -d --name jacarium --hostname jacarium --restart unless-stopped -p 19
         </div>
       </details>
     </div>
+    </section>
 
     <p class="faq-more" id="faq-more">Something else? <a href="https://github.com/jacarium/jacarium/issues" target="_blank" rel="noopener">Report an issue</a> on GitHub.</p>
   </div>
@@ -205,7 +214,11 @@ podman run -d --name jacarium --hostname jacarium --restart unless-stopped -p 19
       const match = words.every((w) => item.textContent.toLowerCase().includes(w));
       item.hidden = !match;
       if (match) shown++;
-      if (words.length) item.open = match;
+      item.open = words.length > 0 && match; // an empty search closes them all
+    });
+    // A heading only shows while one of its questions does.
+    document.querySelectorAll('.faq-group').forEach((group) => {
+      group.hidden = !group.querySelector('.faq-item:not([hidden])');
     });
     empty.hidden = shown > 0;
     document.getElementById('faq-more').hidden = shown === 0;
