@@ -159,11 +159,11 @@ function guessPlatform() {
   return null;
 }
 
-// Cached for the session so moving around the page doesn't use up GitHub's rate limit.
+// Cached for 5 minutes so moving around the page doesn't use up GitHub's rate limit, while a new release still shows up soon.
 async function latestRelease() {
   try {
     const cached = JSON.parse(sessionStorage.getItem('jacarium-release') || 'null');
-    if (cached && Date.now() - cached.at < 3600e3) return cached.release;
+    if (cached && Date.now() - cached.at < 300e3) return cached.release;
   } catch {}
   const res = await fetch(RELEASES_API, { headers: { Accept: 'application/vnd.github+json' } });
   if (!res.ok) throw new Error(`GitHub API ${res.status}`);
