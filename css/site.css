@@ -84,14 +84,14 @@ img { max-width: 100%; }
 .device[data-back] .device-switch { display: block; }
 
 .phone { position: absolute; left: 0; bottom: -3%; width: 29%; max-width: 250px; padding: 8px; border-radius: 36px; background: var(--bg-card); box-shadow: 0 0 0 1px var(--line-strong), 0 40px 80px -30px #000000, 0 20px 40px -20px #2A1F4D; transform-origin: 0% 100%; }
-.phone-deck { aspect-ratio: 9 / 19.5; margin: 0; }
+.phone-deck { aspect-ratio: 590 / 991; margin: 0; }
 .phone-deck .slide, .phone-deck .slide-ph { border-radius: 28px; }
 .phone-deck .slide-ph { padding: 12px; gap: 8px; }
 .phone-deck .slide-ph-title { font-size: 12px; }
 .phone-foot { flex-direction: column; gap: 6px; padding: 10px 0 4px; }
 .phone-foot .frame-caption { flex: none; text-align: center; font-size: 12px; }
 .phone-foot .carousel-controls { flex-wrap: nowrap; gap: 2px; }
-.phone-foot .dot { width: 20px; }
+.phone-foot .dot { width: 14px; }
 
 .device-stack[data-front="desktop"] .frame { z-index: 2; transform: var(--tilt); }
 .device-stack[data-front="desktop"] .phone { z-index: 1; transform: var(--tilt) translate3d(-30%, -4%, 0) scale(0.78); filter: brightness(0.55) saturate(0.8); }

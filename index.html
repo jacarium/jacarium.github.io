@@ -8,11 +8,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css?v=20261016a">
-<link rel="stylesheet" href="css/site.css?v=20261016a">
+<link rel="stylesheet" href="css/tokens.css?v=20261017a">
+<link rel="stylesheet" href="css/site.css?v=20261017a">
 <script>document.documentElement.classList.add('js');</script>
-<script type="module" src="js/jacaranda-tree.js?v=20261016a"></script>
-<script type="module" src="js/main.js?v=20261016a"></script>
+<script type="module" src="js/jacaranda-tree.js?v=20261017a"></script>
+<script type="module" src="js/main.js?v=20261017a"></script>
 </head>
 <body>
 <div class="page">
@@ -59,7 +59,7 @@
   <div class="hero-stage">
     <div class="frame-col">
       <!--
-        Two screenshot frames, desktop and phone, each a carousel of 1–6
+        Two screenshot frames, desktop and phone, each a carousel of 1–8
         .slide elements. Click the frame behind to bring it to the front.
         To add a screenshot, replace a slide's placeholder with
           <img src="images/shot1.png" alt="…">
@@ -110,13 +110,28 @@
         <div class="device-body">
         <div class="deck phone-deck">
           <div class="slide" data-caption="Read a runbook on the go.">
-            <img src="images/screenshots/phone-documents.webp" alt="Runbook open on a phone" width="590" height="1280" decoding="async">
+            <img src="images/screenshots/phone-document-reader.webp" alt="Runbook open in the reader on a phone" width="590" height="991" decoding="async">
+          </div>
+          <div class="slide" data-caption="Edit Markdown with line numbers and a formatting toolbar.">
+            <img src="images/screenshots/phone-document-editor.webp" alt="Runbook open in the Markdown editor on a phone" width="590" height="991" decoding="async">
+          </div>
+          <div class="slide" data-caption="Check a workflow on your phone, edit it on desktop.">
+            <img src="images/screenshots/phone-workflow.webp" alt="Read-only workflow with a health check and a branch on a phone" width="590" height="991" decoding="async">
           </div>
           <div class="slide" data-caption="The board, one column at a time.">
-            <img src="images/screenshots/phone-kanban.webp" alt="Kanban board on a phone" width="590" height="1280" decoding="async">
+            <img src="images/screenshots/phone-kanban.webp" alt="Kanban board on a phone" width="590" height="991" decoding="async">
           </div>
-          <div class="slide" data-caption="The same server, from your phone.">
-            <img src="images/screenshots/phone-sign-in.webp" alt="Sign-in page on a phone" width="590" height="1280" decoding="async">
+          <div class="slide" data-caption="Your tasks with priorities, due dates and a timer.">
+            <img src="images/screenshots/phone-tasks.webp" alt="Task list on a phone" width="590" height="991" decoding="async">
+          </div>
+          <div class="slide" data-caption="The same runbook in the light theme.">
+            <img src="images/screenshots/phone-document-reader-light.webp" alt="Runbook in the reader, light theme, on a phone" width="590" height="991" decoding="async">
+          </div>
+          <div class="slide" data-caption="The board in the light theme.">
+            <img src="images/screenshots/phone-kanban-light.webp" alt="Kanban board, light theme, on a phone" width="590" height="991" decoding="async">
+          </div>
+          <div class="slide" data-caption="Tasks in the light theme.">
+            <img src="images/screenshots/phone-tasks-light.webp" alt="Task list, light theme, on a phone" width="590" height="991" decoding="async">
           </div>
         </div>
         <div class="frame-foot phone-foot">
@@ -131,7 +146,7 @@
         <button type="button" class="device-switch" aria-label="Bring phone screenshots to the front"></button>
       </figure>
       </div>
-      <p class="stack-note">On a phone, Jacarium runs in your browser; it isn't optimised for mobile yet.</p>
+      <p class="stack-note">Jacarium is mobile friendly: on a phone, it runs in your browser.</p>
     </div>
 
     <div class="hero-tree">

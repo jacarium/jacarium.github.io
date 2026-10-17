@@ -4,7 +4,7 @@ const reduced = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduce
 
 // Returns a controller; an inactive carousel (the frame behind) doesn't auto-rotate.
 function initCarousel(root) {
-  const slides = [...root.querySelectorAll('.slide')].slice(0, 6);
+  const slides = [...root.querySelectorAll('.slide')].slice(0, 8);
   const n = slides.length;
   if (!n) return null;
   const dotsEl = root.querySelector('.dots');
