@@ -238,6 +238,7 @@ pre.code code { padding: 0; background: none; color: var(--text); overflow-wrap:
 .dl-meta:empty { display: none; }
 .dl-notes { width: 100%; font-size: 14px; line-height: 1.6; color: var(--text-muted); }
 .dl-notes p { margin: 0 0 8px; }
+.dl-notes pre.code { margin: 0 0 8px; }
 .dl-notes p:last-child { margin-bottom: 0; }
 .dl-notes strong { color: var(--text); font-weight: 600; }
 

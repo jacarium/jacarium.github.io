@@ -136,8 +136,10 @@ const LINUX_ICON = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" 
 const CHECK_ICON = '<svg class="picker-check" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"></path></svg>';
 const CHEVRON_ICON = '<svg class="picker-chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"></path></svg>';
 
+// An option with href installs from a repository: the button opens that page instead of downloading a file.
 const PLATFORMS = [
   { value: 'mac-arm64', group: 'macOS', name: 'Apple silicon', hint: '.dmg · M1 and later', note: 'mac', icon: MAC_ICON, pattern: /-arm64\.dmg$/ },
+  { value: 'linux-dnf', group: 'Fedora / RHEL (dnf)', name: 'COPR repository', hint: 'x86_64 and ARM64', note: 'dnf', icon: LINUX_ICON, href: 'https://copr.fedorainfracloud.org/coprs/robincernin/jacarium/', label: 'COPR project' },
   { value: 'linux-x64-appimage', group: 'Linux x64', name: 'AppImage', hint: 'Any distribution', note: 'linux', icon: LINUX_ICON, pattern: /^(?!.*arm64).*\.AppImage$/ },
   { value: 'linux-x64-deb', group: 'Linux x64', name: '.deb', hint: 'Debian, Ubuntu', note: 'linux', icon: LINUX_ICON, pattern: /_amd64\.deb$/ },
   { value: 'linux-x64-rpm', group: 'Linux x64', name: '.rpm', hint: 'Fedora, RHEL', note: 'linux', icon: LINUX_ICON, pattern: /\.x86_64\.rpm$/ },
@@ -153,7 +155,8 @@ function guessPlatform() {
   if (/Mac/i.test(platform) && !/iPhone|iPad/i.test(ua)) return 'mac-arm64';
   if (/Linux/i.test(platform) && !/Android/i.test(ua)) {
     const arch = /aarch64|arm64/i.test(platform + ua) ? 'arm64' : 'x64';
-    const pkg = /Ubuntu|Debian/i.test(ua) ? 'deb' : /Fedora|Red Hat/i.test(ua) ? 'rpm' : 'appimage';
+    if (/Fedora|Red Hat/i.test(ua)) return 'linux-dnf';
+    const pkg = /Ubuntu|Debian/i.test(ua) ? 'deb' : 'appimage';
     return `linux-${arch}-${pkg}`;
   }
   return null;
@@ -270,8 +273,14 @@ function initDownload(root) {
 
   function update() {
     notes.forEach((n) => { n.hidden = n.dataset.note !== platform.note; });
-    const asset = release?.assets.find((a) => platform.pattern.test(a.name));
-    if (asset) {
+    link.textContent = platform.label || 'Download';
+    const asset = platform.pattern && release?.assets.find((a) => platform.pattern.test(a.name));
+    if (platform.href) {
+      link.href = platform.href;
+      link.target = '_blank';
+      link.removeAttribute('aria-label');
+      meta.textContent = '';
+    } else if (asset) {
       // GitHub serves release files as attachments, so the browser saves it and stays on this page.
       link.href = asset.url;
       link.removeAttribute('target');

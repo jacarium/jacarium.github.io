@@ -8,11 +8,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css?v=20261019a">
-<link rel="stylesheet" href="css/site.css?v=20261019a">
+<link rel="stylesheet" href="css/tokens.css?v=20261020a">
+<link rel="stylesheet" href="css/site.css?v=20261020a">
 <script>document.documentElement.classList.add('js');</script>
-<script type="module" src="js/jacaranda-tree.js?v=20261019a"></script>
-<script type="module" src="js/main.js?v=20261019a"></script>
+<script type="module" src="js/jacaranda-tree.js?v=20261020a"></script>
+<script type="module" src="js/main.js?v=20261020a"></script>
 </head>
 <body>
 <div class="page">
@@ -76,22 +76,22 @@
         </div>
         <div class="deck">
           <div class="slide" data-caption="Runbooks, incident reviews and checklists side by side: Markdown with code, tables and checklists, organised the way your team works.">
-            <img src="images/screenshots/01-documents.webp?v=20261019a" alt="Documents view with a Kubernetes upgrade runbook open" width="1600" height="1000" decoding="async">
+            <img src="images/screenshots/01-documents.webp?v=20261020a" alt="Documents view with a Kubernetes upgrade runbook open" width="1600" height="1000" decoding="async">
           </div>
           <div class="slide" data-caption="Source on the left, a rendered document on the right: two panes, each with its own preview.">
-            <img src="images/screenshots/02-documents-split.webp?v=20261019a" alt="Split view with a runbook's Markdown source next to a rendered architecture document" width="1600" height="1000" decoding="async">
+            <img src="images/screenshots/02-documents-split.webp?v=20261020a" alt="Split view with a runbook's Markdown source next to a rendered architecture document" width="1600" height="1000" decoding="async">
           </div>
           <div class="slide" data-caption="Your Taskwarrior tasks with projects, priorities, due dates and urgency. Start a timer, annotate, filter.">
-            <img src="images/screenshots/05-tasks.webp?v=20261019a" alt="Taskwarrior tasks with projects, priorities and due dates" width="1600" height="1000" decoding="async">
+            <img src="images/screenshots/05-tasks.webp?v=20261020a" alt="Taskwarrior tasks with projects, priorities and due dates" width="1600" height="1000" decoding="async">
           </div>
           <div class="slide" data-caption="Plan the quarter on a board: tags, priorities, assignees and due dates on every card.">
-            <img src="images/screenshots/04-kanban.webp?v=20261019a" alt="Kanban board for a Q4 platform roadmap" width="1600" height="1000" decoding="async">
+            <img src="images/screenshots/04-kanban.webp?v=20261020a" alt="Kanban board for a Q4 platform roadmap" width="1600" height="1000" decoding="async">
           </div>
           <div class="slide" data-caption="Wire up checks and notifications on a canvas: HTTP requests, comparisons, branches and results.">
-            <img src="images/screenshots/06-workflow-builder.webp?v=20261019a" alt="Workflow builder with a health check, a condition and a webhook" width="1600" height="1000" decoding="async">
+            <img src="images/screenshots/06-workflow-builder.webp?v=20261020a" alt="Workflow builder with a health check, a condition and a webhook" width="1600" height="1000" decoding="async">
           </div>
           <div class="slide" data-caption="Ask Robin about a stuck rollout and get commands you can paste, with the provider you choose, including local models.">
-            <img src="images/screenshots/07-robin-chat.webp?v=20261019a" alt="Robin AI chat debugging a stuck Kubernetes rollout" width="1600" height="1000" decoding="async">
+            <img src="images/screenshots/07-robin-chat.webp?v=20261020a" alt="Robin AI chat debugging a stuck Kubernetes rollout" width="1600" height="1000" decoding="async">
           </div>
         </div>
         <div class="frame-foot">
@@ -110,16 +110,16 @@
         <div class="device-body">
         <div class="deck phone-deck">
           <div class="slide" data-caption="Read a runbook on the go.">
-            <img src="images/screenshots/phone-documents.webp?v=20261019a" alt="Runbook open in the reader on a phone" width="786" height="1704" decoding="async">
+            <img src="images/screenshots/phone-documents.webp?v=20261020a" alt="Runbook open in the reader on a phone" width="786" height="1704" decoding="async">
           </div>
           <div class="slide" data-caption="Check a workflow on your phone, edit it on desktop.">
-            <img src="images/screenshots/phone-workflow.webp?v=20261019a" alt="Read-only workflow with a health check and a branch on a phone" width="786" height="1704" decoding="async">
+            <img src="images/screenshots/phone-workflow.webp?v=20261020a" alt="Read-only workflow with a health check and a branch on a phone" width="786" height="1704" decoding="async">
           </div>
           <div class="slide" data-caption="The board, one column at a time.">
-            <img src="images/screenshots/phone-kanban.webp?v=20261019a" alt="Kanban board on a phone" width="786" height="1704" decoding="async">
+            <img src="images/screenshots/phone-kanban.webp?v=20261020a" alt="Kanban board on a phone" width="786" height="1704" decoding="async">
           </div>
           <div class="slide" data-caption="Your tasks with priorities, due dates and a timer.">
-            <img src="images/screenshots/phone-tasks.webp?v=20261019a" alt="Task list on a phone" width="786" height="1704" decoding="async">
+            <img src="images/screenshots/phone-tasks.webp?v=20261020a" alt="Task list on a phone" width="786" height="1704" decoding="async">
           </div>
         </div>
         <div class="frame-foot phone-foot">
@@ -236,6 +236,15 @@
         </div>
         <div class="dl-notes">
           <p data-note="mac"><strong>macOS:</strong> The app isn't signed by Apple yet. The first time, open System Settings &gt; Privacy &amp; Security and click Open Anyway next to Jacarium.</p>
+          <div data-note="dnf">
+            <p><strong>Fedora / RHEL (dnf):</strong> Add the Jacarium repository from Fedora COPR and install it:</p>
+<pre class="code"><code>sudo dnf copr enable robincernin/jacarium
+
+sudo dnf install jacarium</code></pre>
+            <p>Updates arrive with <code>sudo dnf upgrade</code>. COPR is a community repository, not part of the official Fedora repositories. Its packages are the official Jacarium release builds, checked against the release's SHA-256 checksums and updated automatically with every release.</p>
+            <p>For Fedora 42 and newer, and RHEL 10 and compatible systems (CentOS Stream 10, AlmaLinux 10, Rocky Linux 10), on x86_64 and ARM64. On RHEL 10 and compatible systems, enable EPEL first: <code>sudo dnf install epel-release</code>, or on RHEL, <code>sudo subscription-manager repos --enable codeready-builder-for-rhel-10-$(arch)-rpms</code> followed by <code>sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-10.noarch.rpm</code>.</p>
+            <p>Prefer not to add a repository? Choose <strong>.rpm</strong> under Linux x64 or Linux ARM64 to download the package directly. <a href="https://copr.fedorainfracloud.org/coprs/robincernin/jacarium/" target="_blank" rel="noopener">COPR project</a> · <a href="https://github.com/jacarium/jacarium" target="_blank" rel="noopener">Source and issues</a></p>
+          </div>
           <p data-note="linux"><strong>Linux:</strong> Make the AppImage executable (<code>chmod +x</code>) and run it, or install the package: <code>sudo apt install ./jacarium_*.deb</code> (Debian, Ubuntu) or <code>sudo dnf install ./jacarium-*.rpm</code> (Fedora, RHEL). Needs a recent distribution: Ubuntu 24.04, Debian 13, Fedora 40, RHEL 10 or newer.</p>
         </div>
       </div>
