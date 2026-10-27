@@ -277,3 +277,21 @@ pre.code code { padding: 0; background: none; color: var(--text); overflow-wrap:
 .faq-empty { margin: 0 0 20px; font-size: 15px; color: var(--text-muted); }
 .faq-item[hidden] { display: none; }
 .faq-more { margin: 32px 0 0; font-size: 15px; color: var(--text-muted); }
+
+/* Security page */
+.sec-page .lead { margin-top: 20px; }
+.sec-asof { margin: 16px 0 0; font-size: 14px; color: var(--text-faint); }
+.sec-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 28px; }
+.sec-badges a { display: inline-flex; }
+.sec-badges img { display: block; height: 20px; width: auto; }
+.sec-badges-note { margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: var(--text-muted); }
+.sec-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 28px 0 48px; }
+.sec-grid { display: grid; gap: 12px; }
+@media (min-width: 760px) { .sec-grid { grid-template-columns: 1fr 1fr; } }
+.sec-card { padding: 22px 24px; border-radius: 20px; background: var(--bg-card); box-shadow: inset 0 0 0 1px var(--line); font-size: 15px; line-height: 1.6; color: var(--text-muted); min-width: 0; }
+.sec-card h3 { margin: 0 0 10px; font-size: 17px; font-weight: 600; color: var(--text); }
+.sec-card ul { margin: 0; padding-left: 18px; }
+.sec-card li + li { margin-top: 6px; }
+.sec-note { margin: 12px 0 0; font-size: 13px; color: var(--text-faint); }
+.sec-verify { margin-top: 40px; font-size: 16px; line-height: 1.6; color: var(--text-muted); }
+.sec-verify p { margin: 0; }

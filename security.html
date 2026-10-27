@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jacarium Security</title>
+<meta name="description" content="How Jacarium releases are built, signed and checked, and how to verify them yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css?v=20261027a">
+<link rel="stylesheet" href="css/site.css?v=20261027a">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<div class="page">
+
+<header class="site-header">
+  <a href="index.html" class="brand">
+    <svg class="logo" width="36" height="36" viewBox="0 0 120 120" aria-hidden="true">
+      <path d="M22 110 V54 A38 38 0 0 1 98 54 V110 Z" fill="var(--accent)"></path>
+      <g fill="var(--lilac)">
+        <ellipse cx="60" cy="49" rx="8.5" ry="13" transform="rotate(0 60 64)"></ellipse>
+        <ellipse cx="60" cy="49" rx="8.5" ry="13" transform="rotate(72 60 64)"></ellipse>
+        <ellipse cx="60" cy="49" rx="8.5" ry="13" transform="rotate(144 60 64)"></ellipse>
+        <ellipse cx="60" cy="49" rx="8.5" ry="13" transform="rotate(216 60 64)"></ellipse>
+        <ellipse cx="60" cy="49" rx="8.5" ry="13" transform="rotate(288 60 64)"></ellipse>
+      </g>
+      <circle cx="60" cy="64" r="5" fill="var(--accent)"></circle>
+    </svg>
+    <span class="brand-name">Jacarium</span>
+  </a>
+  <nav aria-label="Main" class="site-nav">
+    <a href="security.html" class="nav-link" aria-current="page">Security</a>
+    <a href="index.html#privacy" class="nav-link">Privacy</a>
+    <a href="faq.html" class="nav-link">FAQ</a>
+    <a href="index.html#get-started" class="btn btn-primary btn-sm">Get started</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="faq-page sec-page" aria-labelledby="sec-title">
+  <div class="container faq-col">
+    <p class="eyebrow">Security</p>
+    <h1 class="section-title" id="sec-title">Security and the software supply chain.</h1>
+    <p class="lead">As an engineer and DevSecOps Certified AI Security Professional, currently working towards becoming a Software Supply Chain Security Expert, I make security the priority in this app: what you download can be traced back to the exact source and the exact build that produced it, and you can check it yourself.</p>
+    <p class="sec-asof">As of v3.4.7, October 2026. Everything below runs for every release since v3.4.5; earlier releases don't have the full set of attestations.</p>
+
+    <div class="sec-badges">
+      <a href="https://www.bestpractices.dev/projects/15975" target="_blank" rel="noopener"><img src="https://www.bestpractices.dev/projects/15975/badge" alt="OpenSSF Best Practices: passing" height="20"></a>
+      <a href="https://scorecard.dev/viewer/?uri=github.com/jacarium/jacarium" target="_blank" rel="noopener"><img src="https://api.securityscorecards.dev/projects/github.com/jacarium/jacarium/badge" alt="OpenSSF Scorecard" height="20"></a>
+    </div>
+    <p class="sec-badges-note">The <a href="https://www.bestpractices.dev/projects/15975" target="_blank" rel="noopener">OpenSSF Best Practices badge</a> at the passing level, and an <a href="https://scorecard.dev/viewer/?uri=github.com/jacarium/jacarium" target="_blank" rel="noopener">OpenSSF Scorecard</a> that's published and updated weekly.</p>
+
+    <div class="sec-actions">
+      <a href="https://github.com/jacarium/jacarium#security--supply-chain" class="btn btn-primary" target="_blank" rel="noopener">Verify it yourself</a>
+      <a href="https://github.com/jacarium/jacarium/security/policy" class="btn btn-secondary" target="_blank" rel="noopener">Report a vulnerability</a>
+    </div>
+
+    <section class="faq-group" aria-labelledby="sec-g-build">
+    <h2 class="faq-group-title" id="sec-g-build">Build and provenance</h2>
+    <div class="sec-grid">
+      <article class="sec-card">
+        <h3>SLSA Build Level 3 provenance</h3>
+        <ul>
+          <li>For every installer, the container image and the SBOMs.</li>
+          <li>Built by one reusable GitHub Actions workflow on GitHub-hosted runners.</li>
+          <li>Signed in a separate job that runs no project code, with GitHub artifact attestations (Sigstore).</li>
+          <li>Every attestation is verified before the release is created. A release that doesn't verify is never published.</li>
+        </ul>
+        <p class="sec-note"><a href="https://slsa.dev" target="_blank" rel="noopener">SLSA</a> Build Level 3 describes how the releases are built, not the app itself.</p>
+      </article>
+      <article class="sec-card">
+        <h3>SBOMs</h3>
+        <ul>
+          <li>SPDX and CycloneDX, made with Syft, for every installer platform and every image architecture.</li>
+          <li>Attached to each release and attested.</li>
+          <li>For the image, the attested SBOM is a package-level copy, because the full file list is over GitHub's 16 MB attestation limit. Both versions are published.</li>
+        </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Reproducible container image</h3>
+        <ul>
+          <li>Two builds of the same commit produce identical layers, except the RPM database timestamps.</li>
+          <li>A weekly CI job checks this.</li>
+        </ul>
+        <p class="sec-note">The desktop installers aren't reproducible; they're verifiable through their provenance.</p>
+      </article>
+    </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="sec-g-sign">
+    <h2 class="faq-group-title" id="sec-g-sign">Signatures</h2>
+    <div class="sec-grid">
+      <article class="sec-card">
+        <h3>Signed container image</h3>
+        <ul>
+          <li><code>quay.io/zerodayz/jacarium</code> is signed with cosign, keyless, with the SBOM and VEX attached as attestations.</li>
+          <li>No registry secret is stored anywhere: Quay is federated with the workflow's OIDC identity and issues a one-hour token per release.</li>
+        </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Signed source</h3>
+        <ul>
+          <li>Release commits and tags are SSH-signed and shown as Verified on GitHub.</li>
+          <li>Between releases, <code>main</code> is published as signed development snapshots.</li>
+          <li>Repository rulesets block force pushes, deletions and unsigned commits on <code>main</code> and on the release tags.</li>
+        </ul>
+      </article>
+    </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="sec-g-vuln">
+    <h2 class="faq-group-title" id="sec-g-vuln">Vulnerabilities and code analysis</h2>
+    <div class="sec-grid">
+      <article class="sec-card">
+        <h3>VEX with every release</h3>
+        <ul>
+          <li>An OpenVEX document lists which scanner findings don't affect Jacarium and why, each verified in the code.</li>
+          <li>It also lists which findings have a fix pending.</li>
+        </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Continuous vulnerability scanning</h3>
+        <ul>
+          <li>OSV-Scanner on the lock files on every push.</li>
+          <li>Grype at build time: a fixable High or Critical finding fails the build unless the VEX covers it.</li>
+          <li>A weekly re-scan of the latest release's SBOMs.</li>
+        </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Code and workflow analysis</h3>
+        <ul>
+          <li>CodeQL (security-extended) and the OpenSSF Scorecard, on every push and weekly.</li>
+          <li>actionlint over the CI workflows.</li>
+          <li>ESLint with zero warnings allowed.</li>
+        </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Secret and privacy scan</h3>
+        <ul>
+          <li>The published source is scanned for secrets and private data before every release and snapshot.</li>
+        </ul>
+      </article>
+    </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="sec-g-deps">
+    <h2 class="faq-group-title" id="sec-g-deps">Dependencies and the image</h2>
+    <div class="sec-grid">
+      <article class="sec-card">
+        <h3>Dependency policy</h3>
+        <ul>
+          <li>Nothing younger than 7 days is installed (npm, pip and Dependabot's cooldown). The rare urgent exception is reviewed and publicly logged.</li>
+          <li>Base images and GitHub Actions are pinned by digest or full commit.</li>
+          <li>Third-party tools are pinned binaries whose checksums and signatures are verified before use.</li>
+        </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Container hardening</h3>
+        <ul>
+          <li>The web server (Caddy) is built from source with a current Go toolchain.</li>
+          <li>Unused runtimes are removed from the base image.</li>
+          <li>The Red Hat UBI base image is pinned by digest.</li>
+        </ul>
+      </article>
+    </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="sec-g-process">
+    <h2 class="faq-group-title" id="sec-g-process">Reporting and contributing</h2>
+    <div class="sec-grid">
+      <article class="sec-card">
+        <h3>Reporting a vulnerability</h3>
+        <ul>
+          <li>Private vulnerability reporting, described in <a href="https://github.com/jacarium/jacarium/blob/main/SECURITY.md" target="_blank" rel="noopener">SECURITY.md</a>.</li>
+          <li>An acknowledgement within 3 days, and a fix or decision within 30 days.</li>
+        </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Contributing and tests</h3>
+        <ul>
+          <li><a href="https://github.com/jacarium/jacarium/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a> covers the contribution process, the coding standards and a test policy.</li>
+          <li>The suite has 280+ automated tests, run locally before every release.</li>
+        </ul>
+      </article>
+    </div>
+    </section>
+
+    <section class="sec-verify" aria-labelledby="sec-verify-title">
+      <h2 class="faq-group-title" id="sec-verify-title">Verify it yourself</h2>
+      <p>The <a href="https://github.com/jacarium/jacarium#security--supply-chain" target="_blank" rel="noopener">README</a> has the commands: <code>gh attestation verify</code> for the provenance, SBOMs and VEX, <code>cosign verify</code> for the container image, and <code>git verify-tag</code> for the source. Every file is on the <a href="https://github.com/jacarium/jacarium/releases" target="_blank" rel="noopener">Releases</a> page.</p>
+    </section>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <span>Jacarium</span>
+  <span>Free and open source under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank" rel="noopener">AGPL-3.0 licence</a> · <a href="https://github.com/jacarium/jacarium" target="_blank" rel="noopener">Source code on GitHub</a></span>
+  <span>Provided as is.</span>
+</footer>
+
+</div>
+</body>
+</html>
