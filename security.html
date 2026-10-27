@@ -8,8 +8,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/tokens.css?v=20261027a">
-<link rel="stylesheet" href="css/site.css?v=20261027a">
+<link rel="stylesheet" href="css/tokens.css?v=20261027c">
+<link rel="stylesheet" href="css/site.css?v=20261027c">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -45,7 +45,7 @@
     <p class="eyebrow">Security</p>
     <h1 class="section-title" id="sec-title">Security and the software supply chain.</h1>
     <p class="lead">As an engineer and DevSecOps Certified AI Security Professional, currently working towards becoming a Software Supply Chain Security Expert, I make security the priority in this app: what you download can be traced back to the exact source and the exact build that produced it, and you can check it yourself.</p>
-    <p class="sec-asof">As of v3.4.7, October 2026. Everything below runs for every release since v3.4.5; earlier releases don't have the full set of attestations.</p>
+    <p class="sec-asof">As of v3.4.8, October 2026. Everything below runs for every release since v3.4.5; earlier releases don't have the full set of attestations.</p>
 
     <div class="sec-badges">
       <a href="https://www.bestpractices.dev/projects/15975" target="_blank" rel="noopener"><img src="https://www.bestpractices.dev/projects/15975/badge" alt="OpenSSF Best Practices: passing" height="20"></a>
@@ -107,6 +107,16 @@
           <li>Between releases, <code>main</code> is published as signed development snapshots.</li>
           <li>Repository rulesets block force pushes, deletions and unsigned commits on <code>main</code> and on the release tags.</li>
         </ul>
+      </article>
+      <article class="sec-card">
+        <h3>Attestations attached to every release</h3>
+        <ul>
+          <li>Each release file has its Sigstore bundle next to it (<code>FILE.intoto.jsonl</code>) with the provenance, and for the installers the SBOM and VEX attestations, so anyone can verify a download, even offline.</li>
+        </ul>
+<pre class="code"><code>gh attestation verify FILE \
+  --bundle FILE.intoto.jsonl \
+  --repo jacarium/jacarium \
+  --signer-workflow jacarium/jacarium/.github/workflows/build.yml</code></pre>
       </article>
     </div>
     </section>

@@ -295,3 +295,4 @@ pre.code code { padding: 0; background: none; color: var(--text); overflow-wrap:
 .sec-note { margin: 12px 0 0; font-size: 13px; color: var(--text-faint); }
 .sec-verify { margin-top: 40px; font-size: 16px; line-height: 1.6; color: var(--text-muted); }
 .sec-verify p { margin: 0; }
+.sec-card pre.code { margin: 12px 0 0; font-size: 13px; }
