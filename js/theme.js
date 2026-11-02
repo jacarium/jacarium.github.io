@@ -1,6 +1,6 @@
 // Seasonal theme switch. Set THEME to the name of a folder in themes/, or to 'none' for the normal site.
 // A theme is themes/<name>/theme.css, plus themes/<name>/theme.js when it lists one below.
-const THEME = 'halloween';
+const THEME = 'none';
 
 const THEMES = {
   halloween: { script: true }
