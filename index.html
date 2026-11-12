@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/tokens.css?v=20261027c">
-<link rel="stylesheet" href="css/site.css?v=20261027c">
+<link rel="stylesheet" href="css/site.css?v=20261112a">
 <!-- Seasonal theme: set THEME in js/theme.js --><script src="js/theme.js?v=20261103a"></script>
 <script>document.documentElement.classList.add('js');</script>
 <script type="module" src="js/jacaranda-tree.js?v=20261027c"></script>
@@ -35,6 +35,7 @@
   </a>
   <nav aria-label="Main" class="site-nav">
     <a href="security.html" class="nav-link">Security</a>
+    <a href="#accessibility" class="nav-link">Accessibility</a>
     <a href="#privacy" class="nav-link">Privacy</a>
     <a href="faq.html" class="nav-link">FAQ</a>
     <a href="#get-started" class="btn btn-primary btn-sm">Get started</a>
@@ -206,6 +207,40 @@
       <p class="sec-report"><a href="security.html">How Jacarium is built, signed and checked</a></p>
       <p class="sec-report"><a href="https://github.com/jacarium/jacarium/security/policy" target="_blank" rel="noopener">Report a vulnerability</a> through private reporting on GitHub.</p>
     </div>
+  </div>
+</section>
+
+<section id="accessibility" class="a11y" aria-labelledby="a11y-title">
+  <div class="container reveal">
+    <div class="a11y-head">
+      <div class="a11y-intro">
+        <p class="eyebrow">Accessibility</p>
+        <h2 class="section-title" id="a11y-title">Reading aids for every reader.</h2>
+        <p class="lead">It started with a colleague who found the documents too cluttered to read. Settings &gt; Accessibility has a complete set of reading aids that work across the whole app: documents, chat, tasks, Kanban, Diagnostics reports, dialogs and Settings itself.</p>
+      </div>
+      <figure class="a11y-shot a11y-lead">
+        <a href="images/screenshots/a11y-settings.webp?v=20261112a" target="_blank" rel="noopener"><img src="images/screenshots/a11y-settings.webp?v=20261112a" alt="Settings &gt; Accessibility: the ready-made profiles and the reading aids" width="2880" height="1800" loading="lazy" decoding="async"></a>
+        <figcaption>Ready-made profiles at the top of Settings &gt; Accessibility, one click each. Change anything afterwards; Default puts it all back.</figcaption>
+      </figure>
+    </div>
+
+    <div class="a11y-grid">
+      <figure class="a11y-shot">
+        <a href="images/screenshots/a11y-dyslexia.webp?v=20261112a" target="_blank" rel="noopener"><img src="images/screenshots/a11y-dyslexia.webp?v=20261112a" alt="A runbook in Preview with the Dyslexia friendly profile: Lexend, wider letters and words, a 70-character column and the reading ruler highlighting one line" width="2880" height="1800" loading="lazy" decoding="async"></a>
+        <figcaption><strong>Dyslexia friendly.</strong> Lexend, wider letters and words, a 70-character column and a one-line reading ruler.</figcaption>
+      </figure>
+      <figure class="a11y-shot">
+        <a href="images/screenshots/a11y-low-vision.webp?v=20261112a" target="_blank" rel="noopener"><img src="images/screenshots/a11y-low-vision.webp?v=20261112a" alt="The same runbook with the Low vision profile: text at 150 %, the interface scaled too, high contrast, Atkinson Hyperlegible, links underlined" width="2880" height="1800" loading="lazy" decoding="async"></a>
+        <figcaption><strong>Low vision.</strong> Text at 150 % with the interface scaled too, high contrast, Atkinson Hyperlegible and underlined links.</figcaption>
+      </figure>
+      <figure class="a11y-shot">
+        <a href="images/screenshots/a11y-focus.webp?v=20261112a" target="_blank" rel="noopener"><img src="images/screenshots/a11y-focus.webp?v=20261112a" alt="The Focus profile: a three-line mask ruler over the runbook, colours toned down, images hidden" width="2880" height="1800" loading="lazy" decoding="async"></a>
+        <figcaption><strong>Focus.</strong> A three-line mask ruler, colours toned down and images hidden.</figcaption>
+      </figure>
+    </div>
+
+
+    <p class="a11y-note">Jacarium is designed to support WCAG 2.2 success criteria such as 1.4.1 Use of Color, 1.4.3 Contrast (Minimum), 1.4.4 Resize Text, 1.4.8 Visual Presentation, 1.4.12 Text Spacing and 2.3.3 Animation from Interactions. It has not been audited for conformance; if something is in your way, please <a href="https://github.com/jacarium/jacarium/issues" target="_blank" rel="noopener">open an issue</a>.</p>
   </div>
 </section>
 
